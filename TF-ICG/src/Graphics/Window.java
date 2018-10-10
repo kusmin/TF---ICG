@@ -5,6 +5,7 @@
  */
 package Graphics;
 
+import Keyboard.Keyboard;
 import com.jogamp.opengl.awt.GLCanvas;
 import com.jogamp.opengl.util.FPSAnimator;
 import java.awt.BorderLayout;
@@ -14,21 +15,19 @@ import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-/**
- *
- * @author cw
- */
 public class Window extends JFrame {
 
     private JPanel mainPanel;
     
-    public Window(String title, FPSAnimator animator, int width, int heigth) {
+    public Window(String title, FPSAnimator animator, int width, int heigth, Keyboard keyboard) {
 
         super(title);
         setupWindow(animator, width, heigth);
         mainPanel = new JPanel(new BorderLayout());
         this.getContentPane().add(mainPanel, BorderLayout.CENTER);
+        addKeyListener(keyboard);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+        
     }
 
     private void setupWindow(final FPSAnimator animator, int width, int heigth) {

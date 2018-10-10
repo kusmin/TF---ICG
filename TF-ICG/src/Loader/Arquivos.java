@@ -2,11 +2,15 @@ package Loader;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class Arquivos {
 
@@ -15,8 +19,6 @@ public class Arquivos {
     public Arquivos(String diretorio) {
 
         this.diretorio = diretorio;
-
-        criarDiretorio(diretorio);
 
     }
 
@@ -72,25 +74,45 @@ public class Arquivos {
     }
 
     public final String ler(String nomeArquivo, String extensao) {
-        
-        String ler = "";
-        
 
-        try (BufferedReader arquivo = new BufferedReader(new FileReader(diretorio + nomeArquivo + extensao))){
+        String ler = "";
+
+        try (BufferedReader arquivo = new BufferedReader(new FileReader(diretorio + nomeArquivo + extensao))) {
 
             String aux;
             while (arquivo.ready()) {
                 aux = arquivo.readLine();
-                //System.out.println(aux);
                 ler += aux + "\n";
+                //System.out.println(ler);
             }
 
-        
+            arquivo.close();
 
         } catch (Exception e) {
             System.err.println("Erro ao criar diretorio");
         }
         return ler;
+    }
+
+    public final String lerBytes(String nomeArquivo, String extensao) {
+
+        try {
+
+            Path caminho = Paths.get(diretorio + nomeArquivo + extensao);
+            
+            byte[] text = Files.readAllBytes(caminho);
+            
+            String str = new String(text);
+     
+            text.clone();
+     
+            return str;
+            
+        } catch (FileNotFoundException fnfex) {
+        } catch (IOException ioex) {
+        }
+        return null;
+
     }
 
     public void excluir() {
