@@ -1,27 +1,58 @@
 package Loader;
 
+import com.jogamp.opengl.util.texture.Texture;
 import java.util.ArrayList;
 
 public class Objeto {
 
-    protected String name;
-    protected String address;
+    public String getNameTexture() {
+        return nameTexture;
+    }
 
-    private ArrayList<float[]> vertex;              //vertices
-    private ArrayList<float[]> texture;             //textura
-    private ArrayList<float[]> normal_vector;       //vetores_normais
-    private ArrayList<int[]> faceVertex;            //faces dos vertices
-    private ArrayList<int[]> faceTexture;           //faces dos vertices
-    private ArrayList<int[]> faceNormalVector;      //faces dos vertices
+    public void setNameTexture(String nameTexture) {
+        this.nameTexture = nameTexture;
+    }
 
-    public Objeto() {}
+    public String getAddressTexture() {
+        return addressTexture;
+    }
+
+    public void setAddressTexture(String addressTexture) {
+        this.addressTexture = addressTexture;
+    }
+
+    public String getExtTexture() {
+        return extTexture;
+    }
+
+
+    public void setExtTexture(String extTexture) {
+        String ext[] = getNameTexture().split(".");
+        this.extTexture = ext[ext.length - 1];
+    }
+
+    protected String nameObject;
+    protected String addressObject;
+    
+    private String nameTexture;       //Nome Textura
+    private String addressTexture;    //Endereco Textura
+    private String extTexture;        //Extensao Textura
+    
+    protected ArrayList<float[]> vertex;              //vertices
+    protected ArrayList<float[]> texture;             //textura
+    protected ArrayList<float[]> normal_vector;       //vetores_normais
+    protected ArrayList<int[]> faceVertex;            //faces dos vertices
+    protected ArrayList<int[]> faceTexture;           //faces dos vertices
+    protected ArrayList<int[]> faceNormalVector;      //faces dos vertices
+    
+    protected Texture textura;
 
     public Objeto(String address, String name) {
 
-        this.address = address;
-        this.name = name;
+        this.addressObject = address;
+        this.nameObject = name;
 
-        vertex = new ArrayList<>(3);                //vertices
+        vertex = new ArrayList<>(3);                //vertices (tam 4 = coord homogenia)
         texture = new ArrayList<>(2);               //textura
         normal_vector = new ArrayList<>(3);         //vetores_normais
 
@@ -29,19 +60,21 @@ public class Objeto {
         faceTexture = new ArrayList<>(3);
         faceNormalVector = new ArrayList<>(3);
     }
-
+    
+    
+    
     public String getName() {
-        return this.name;
+        return this.nameObject;
     }
 
     public String getAddress() {
-        return this.address;
+        return this.addressObject;
     }
 
     public void addVertex(float v1, float v2, float v3) {
         this.vertex.add(new float[]{v1, v2, v3});
     }
-
+    
     public void addTexture(float t1, float t2) {
         this.texture.add(new float[]{t1, t2});
     }
@@ -85,10 +118,17 @@ public class Objeto {
     public int[] getFaceNormalVector(int pos) {
         return faceNormalVector.get(pos);
     }
+    
+    public Texture getTexture(){
+        return textura;
+    }
 
     public int sizeFaces() {
         return faceVertex.size();
     }
 
+    public int sizeVertex() {
+        return vertex.size();
+    }
    
 }

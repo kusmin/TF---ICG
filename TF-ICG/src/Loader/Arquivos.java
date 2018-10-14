@@ -16,10 +16,10 @@ public class Arquivos {
 
     String diretorio;
 
+    Arquivos arquivo;
+
     public Arquivos(String diretorio) {
-
         this.diretorio = diretorio;
-
     }
 
     //Local onde os arquivos serao armazenados
@@ -99,15 +99,15 @@ public class Arquivos {
         try {
 
             Path caminho = Paths.get(diretorio + nomeArquivo + extensao);
-            
+
             byte[] text = Files.readAllBytes(caminho);
-            
+
             String str = new String(text);
-     
+
             text.clone();
-     
+
             return str;
-            
+
         } catch (FileNotFoundException fnfex) {
         } catch (IOException ioex) {
         }
